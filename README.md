@@ -1,1 +1,0 @@
-# nukhasa-bourse
