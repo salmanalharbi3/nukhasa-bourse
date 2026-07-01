@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>بورصة النخاسة لتداول الرقيق</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js"></script>
@@ -18,6 +18,12 @@
     @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.6; } }
     @keyframes priceUp { 0% { background: #052e16; } 100% { background: transparent; } }
     @keyframes priceDown { 0% { background: #450a0a; } 100% { background: transparent; } }
+    
+    /* تحسينات الموبايل فقط */
+    .section { padding: 1rem; }
+    table { font-size: 15px; }
+    .nav-link { font-size: 15px; padding: 8px 12px; }
+    button { font-size: 17px; padding: 14px 24px; }
   </style>
 </head>
 <body class="bg-gray-950 text-gray-100 min-h-screen">
@@ -32,63 +38,69 @@
     <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
       <div class="flex items-center gap-3">
         <i class="fa-solid fa-handshake text-4xl gold"></i>
-        <h1 class="text-3xl font-bold tracking-widest">بورصة النخاسة</h1>
-        <span class="text-xl text-yellow-400">لتداول الرقيق</span>
-      </div>
-      <div class="flex items-center gap-6 text-lg">
-        <a onclick="showSection('dashboard')" class="cursor-pointer hover:text-yellow-400 flex items-center gap-2"><i class="fa-solid fa-gauge-high"></i> اللوحة</a>
-        <a onclick="showSection('market')" class="cursor-pointer hover:text-yellow-400 flex items-center gap-2"><i class="fa-solid fa-chart-line"></i> السوق</a>
-        <a onclick="showSection('portfolio')" class="cursor-pointer hover:text-yellow-400 flex items-center gap-2"><i class="fa-solid fa-briefcase"></i> محفظتي</a>
-        <a onclick="showSection('history')" class="cursor-pointer hover:text-yellow-400 flex items-center gap-2"><i class="fa-solid fa-clock-rotate-left"></i> السجل</a>
-        <div class="flex items-center gap-2 bg-gray-900 px-5 py-2 rounded-3xl border border-yellow-500">
-          <i class="fa-solid fa-coins gold"></i>
-          <span id="balance" class="font-bold text-xl">٥٠,٠٠٠</span>
-          <span class="text-yellow-400 text-sm">دينار</span>
+        <div>
+          <h1 class="text-2xl font-bold tracking-widest">بورصة النخاسة</h1>
+          <span class="text-yellow-400 text-sm">لتداول الرقيق</span>
         </div>
       </div>
+      <div class="flex items-center gap-2 bg-gray-900 px-4 py-2 rounded-3xl border border-yellow-500">
+        <i class="fa-solid fa-coins gold"></i>
+        <span id="balance" class="font-bold text-xl">٥٠,٠٠٠</span>
+        <span class="text-yellow-400 text-xs">دينار</span>
+      </div>
+    </div>
+    
+    <!-- Mobile Navigation -->
+    <div class="flex justify-around bg-black border-t border-yellow-500/30 py-2 text-sm">
+      <a onclick="showSection('dashboard')" class="nav-link cursor-pointer flex flex-col items-center text-yellow-400"><i class="fa-solid fa-gauge-high mb-0.5"></i> اللوحة</a>
+      <a onclick="showSection('market')" class="nav-link cursor-pointer flex flex-col items-center"><i class="fa-solid fa-chart-line mb-0.5"></i> السوق</a>
+      <a onclick="showSection('portfolio')" class="nav-link cursor-pointer flex flex-col items-center"><i class="fa-solid fa-briefcase mb-0.5"></i> محفظتي</a>
+      <a onclick="showSection('history')" class="nav-link cursor-pointer flex flex-col items-center"><i class="fa-solid fa-clock-rotate-left mb-0.5"></i> السجل</a>
     </div>
   </nav>
 
   <!-- Dashboard -->
-  <div id="dashboard" class="section max-w-7xl mx-auto p-6">
-    <h2 class="text-4xl font-bold mb-6 flex items-center gap-3"><i class="fa-solid fa-gauge-high live"></i> لوحة التحكم المالية</h2>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-      <div class="bg-gray-900 rounded-3xl p-6 border border-yellow-500/30">
-        <p class="text-yellow-400">إجمالي الثروة</p>
-        <p id="total-wealth" class="text-5xl font-bold gold">٥٠,٠٠٠</p>
+  <div id="dashboard" class="section max-w-7xl mx-auto">
+    <h2 class="text-3xl font-bold mb-6 flex items-center gap-3"><i class="fa-solid fa-gauge-high live"></i> لوحة التحكم</h2>
+    
+    <div class="grid grid-cols-2 gap-4">
+      <div class="bg-gray-900 rounded-3xl p-5 border border-yellow-500/30">
+        <p class="text-yellow-400 text-sm">إجمالي الثروة</p>
+        <p id="total-wealth" class="text-4xl font-bold gold">٥٠,٠٠٠</p>
       </div>
-      <div class="bg-gray-900 rounded-3xl p-6 border border-yellow-500/30">
-        <p class="text-yellow-400">قيمة المحفظة</p>
-        <p id="portfolio-value" class="text-5xl font-bold text-green-400">٠</p>
+      <div class="bg-gray-900 rounded-3xl p-5 border border-yellow-500/30">
+        <p class="text-yellow-400 text-sm">قيمة المحفظة</p>
+        <p id="portfolio-value" class="text-4xl font-bold text-green-400">٠</p>
       </div>
-      <div class="bg-gray-900 rounded-3xl p-6 border border-yellow-500/30">
-        <p class="text-yellow-400">عدد الرقيق المملوك</p>
-        <p id="total-owned" class="text-5xl font-bold">٠</p>
+      <div class="bg-gray-900 rounded-3xl p-5 border border-yellow-500/30">
+        <p class="text-yellow-400 text-sm">عدد الرقيق</p>
+        <p id="total-owned" class="text-4xl font-bold">٠</p>
       </div>
-      <div class="bg-gray-900 rounded-3xl p-6 border border-yellow-500/30">
-        <p class="text-yellow-400">حجم التداول اليوم</p>
-        <p id="daily-volume" class="text-5xl font-bold text-yellow-400">١٢٤,٨٠٠</p>
+      <div class="bg-gray-900 rounded-3xl p-5 border border-yellow-500/30">
+        <p class="text-yellow-400 text-sm">حجم التداول اليوم</p>
+        <p id="daily-volume" class="text-4xl font-bold text-yellow-400">١٢٤,٨٠٠</p>
       </div>
     </div>
-    <button onclick="importNewSlave()" class="mt-8 bg-yellow-500 hover:bg-yellow-400 text-black px-8 py-4 rounded-3xl font-bold flex items-center gap-3 text-xl">
-      <i class="fa-solid fa-ship"></i> استيراد رقيق جديد (٥٠٠٠ دينار)
+
+    <button onclick="importNewSlave()" 
+            class="mt-6 w-full bg-yellow-500 hover:bg-yellow-400 active:bg-yellow-600 text-black py-5 rounded-3xl font-bold text-xl flex items-center justify-center gap-3">
+      <i class="fa-solid fa-ship"></i> 
+      استيراد رقيق جديد (٥٠٠٠ دينار)
     </button>
   </div>
 
-  <!-- Market Section -->
-  <div id="market" class="section max-w-7xl mx-auto p-6 hidden">
-    <h2 class="text-4xl font-bold mb-8 flex items-center gap-3"><i class="fa-solid fa-fire-flame-curved live"></i> السوق المباشر - أسعار حية</h2>
+  <!-- Market -->
+  <div id="market" class="section max-w-7xl mx-auto hidden">
+    <h2 class="text-3xl font-bold mb-6 flex items-center gap-3"><i class="fa-solid fa-fire-flame-curved live"></i> السوق المباشر</h2>
     <div class="overflow-x-auto">
       <table class="w-full text-right border-collapse">
         <thead>
           <tr class="bg-gray-900 text-yellow-400 border-b border-yellow-500">
-            <th class="p-4">الرقم</th>
-            <th class="p-4">الرقيق</th>
-            <th class="p-4">مستورد</th>
-            <th class="p-4">الكمية المتاحة</th>
-            <th class="p-4">السعر الحالي</th>
-            <th class="p-4">التغير %</th>
-            <th class="p-4">الإجراء</th>
+            <th class="p-3">الرقم</th>
+            <th class="p-3">الرقيق</th>
+            <th class="p-3">السعر</th>
+            <th class="p-3">متاح</th>
+            <th class="p-3">الإجراء</th>
           </tr>
         </thead>
         <tbody id="market-table" class="text-lg"></tbody>
@@ -97,35 +109,41 @@
   </div>
 
   <!-- Portfolio -->
-  <div id="portfolio" class="section max-w-7xl mx-auto p-6 hidden">
-    <h2 class="text-4xl font-bold mb-8">محفظتي من الرقيق</h2>
-    <div id="portfolio-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  <div id="portfolio" class="section max-w-7xl mx-auto hidden">
+    <h2 class="text-3xl font-bold mb-6">محفظتي من الرقيق</h2>
+    <div id="portfolio-list" class="grid grid-cols-1 gap-5"></div>
   </div>
 
   <!-- History -->
-  <div id="history" class="section max-w-7xl mx-auto p-6 hidden">
-    <h2 class="text-4xl font-bold mb-8">سجل التداولات</h2>
+  <div id="history" class="section max-w-7xl mx-auto hidden">
+    <h2 class="text-3xl font-bold mb-6">سجل التداولات</h2>
     <div id="history-list" class="space-y-4"></div>
   </div>
 
   <!-- Modal -->
-  <div id="slave-modal" onclick="if(event.target===this)hideModal()" class="hidden fixed inset-0 bg-black/90 flex items-center justify-center z-50">
-    <div onclick="event.stopImmediatePropagation()" class="bg-gray-900 rounded-3xl max-w-4xl w-full mx-4 p-8 max-h-[90vh] overflow-auto">
+  <div id="slave-modal" onclick="if(event.target===this)hideModal()" class="hidden fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4">
+    <div onclick="event.stopImmediatePropagation()" class="bg-gray-900 rounded-3xl w-full max-w-md p-6">
       <div id="modal-content"></div>
     </div>
   </div>
 
   <script>
-    // =============== بيانات متطورة ===============
+    // ==================== البيانات ====================
     let slaves = [
-      { id: 1, name: "زيد الزنجي", importer: "حماد بن محمد (تيبو تيب)", origin: "زنجبار", basePrice: 8500, stock: 12, skills: "قوي • زراعة • حراسة", desc: "عمر ٢٨، صحة ممتازة" },
-      { id: 2, name: "فاطمة الحبشية", importer: "سعيد قاسم الصعيدي", origin: "الحبشة", basePrice: 12000, stock: 8, skills: "طبخ • خدمة منزلية", desc: "جميلة • مطيعة • عمر ٢٢" },
-      { id: 3, name: "عمر النويبي", importer: "باسودان الحضرمي", origin: "السودان", basePrice: 6300, stock: 15, skills: "حدادة • نجارة", desc: "عمر ٣٥ • قوي التحمل" },
-      { id: 4, name: "مريم الزنجية", importer: "الصافي الحضرمي", origin: "تنزانيا", basePrice: 9500, stock: 6, skills: "رقص • غناء", desc: "عمر ١٩ • جذابة" },
-      { id: 5, name: "خالد البربري", importer: "عبد الله بن جدعان", origin: "شمال أفريقيا", basePrice: 11000, stock: 9, skills: "حارس شخصي", desc: "عمر ٣١ • مخضرم" },
-      { id: 6, name: "ليلى السودانية", importer: "حماد بن محمد", origin: "السودان", basePrice: 7800, stock: 11, skills: "مربية • خادمة", desc: "عمر ٢٤" },
+      { id: 1, name: "زيد الزنجي", importer: "حماد بن محمد", origin: "زنجبار", basePrice: 8500, stock: 12, skills: "قوي • زراعة", desc: "عمر ٢٨" },
+      { id: 2, name: "فاطمة الحبشية", importer: "سعيد قاسم", origin: "الحبشة", basePrice: 12000, stock: 8, skills: "طبخ • خدمة", desc: "عمر ٢٢" },
+      { id: 3, name: "عمر النويبي", importer: "باسودان الحضرمي", origin: "السودان", basePrice: 6300, stock: 15, skills: "حدادة • نجارة", desc: "عمر ٣٥" },
+      { id: 4, name: "مريم الزنجية", importer: "الصافي الحضرمي", origin: "تنزانيا", basePrice: 9500, stock: 6, skills: "رقص • غناء", desc: "عمر ١٩" },
+      { id: 5, name: "خالد البربري", importer: "عبد الله بن جدعان", origin: "شمال أفريقيا", basePrice: 11000, stock: 9, skills: "حارس شخصي", desc: "عمر ٣١" },
+      { id: 6, name: "ليلى السودانية", importer: "حماد بن محمد", origin: "السودان", basePrice: 7800, stock: 11, skills: "مربية", desc: "عمر ٢٤" },
       { id: 7, name: "سليمان اليافعي", importer: "باسودان الحضرمي", origin: "اليمن", basePrice: 14000, stock: 4, skills: "تاجر ذكي", desc: "عمر ٢٩" },
-      { id: 8, name: "نورة الحبشية", importer: "سعيد قاسم", origin: "الحبشة", basePrice: 10500, stock: 7, skills: "خياطة فاخرة", desc: "عمر ٢١" }
+      { id: 8, name: "نورة الحبشية", importer: "سعيد قاسم", origin: "الحبشة", basePrice: 10500, stock: 7, skills: "خياطة", desc: "عمر ٢١" },
+      
+      // العبيد الجدد الذين طلبت إضافتهم
+      { id: 9, name: "جلاحكو", importer: "عبدالله نائف", origin: "بريدة", basePrice: 4500, stock: 6, skills: "خدوم • زراعة", desc: "مواليد بريدة • عمر ٢٣ • تابع لسيده عبدالله نائف" },
+      { id: 10, name: "جلوي", importer: "مازن أبو شوعود", origin: "بريدة", basePrice: 3200, stock: 9, skills: "خدوم • مساعد منزلي", desc: "مواليد بريدة • مجهول العمر • خدوم جداً" },
+      { id: 11, name: "مشاري بجاد", importer: "مازن أبو شوعود", origin: "بريدة", basePrice: 5800, stock: 5, skills: "شاب نشيط • خدمة", desc: "مواليد بريدة • عمر ١٨" },
+      { id: 12, name: "متعب", importer: "من الكويت", origin: "الكويت", basePrice: 999, stock: 25, skills: "الأرخص • خدوم متعدد", desc: "مواليد الكويت • مجهول العمر • الأهم والأرخص في السوق!" }
     ];
 
     let currentPrices = {};
@@ -133,34 +151,31 @@
     let portfolio = JSON.parse(localStorage.getItem('portfolio')) || [];
     let balance = parseInt(localStorage.getItem('balance')) || 50000;
     let history = JSON.parse(localStorage.getItem('history')) || [];
-    let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-    // صوت تفاعلي
-    function playPriceSound(isUp) {
-      const oscillator = audioCtx.createOscillator();
-      const gainNode = audioCtx.createGain();
-      oscillator.connect(gainNode);
-      gainNode.connect(audioCtx.destination);
-      oscillator.frequency.setValueAtTime(isUp ? 800 : 400, audioCtx.currentTime);
-      gainNode.gain.value = 0.3;
-      oscillator.start();
-      setTimeout(() => { oscillator.stop(); }, 180);
+    // ==================== صوت النطق الغبي المضحك ====================
+    function speak(text) {
+      if (!('speechSynthesis' in window)) return;
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'ar-SA';
+      utterance.rate = 1.35;   // سرعة غبية سريعة
+      utterance.pitch = 1.55;  // طبقة عالية مضحكة
+      utterance.volume = 1.0;
+      window.speechSynthesis.speak(utterance);
     }
 
+    // ==================== باقي الكود (محدث) ====================
     function updatePrices() {
       slaves.forEach(slave => {
         if (!currentPrices[slave.id]) currentPrices[slave.id] = slave.basePrice;
         if (!priceHistory[slave.id]) priceHistory[slave.id] = [slave.basePrice];
 
         const changePercent = (Math.random() * 14 - 7);
-        const newPrice = Math.max(2000, Math.floor(currentPrices[slave.id] * (1 + changePercent/100)));
+        const newPrice = Math.max(500, Math.floor(currentPrices[slave.id] * (1 + changePercent/100)));
         const isUp = newPrice > currentPrices[slave.id];
 
         currentPrices[slave.id] = newPrice;
         priceHistory[slave.id].push(newPrice);
         if (priceHistory[slave.id].length > 20) priceHistory[slave.id].shift();
-
-        playPriceSound(isUp);
       });
       renderAll();
       renderTicker();
@@ -185,17 +200,15 @@
         const change = ((price - slave.basePrice) / slave.basePrice * 100).toFixed(1);
         const isUp = change >= 0;
         const row = document.createElement('tr');
-        row.className = `table-row border-b border-gray-700 hover:bg-gray-800 cursor-pointer`;
+        row.className = `border-b border-gray-700 hover:bg-gray-800`;
         row.innerHTML = `
-          <td class="p-4 font-mono">#${slave.id}</td>
-          <td class="p-4 font-bold" onclick="showSlave(${slave.id})">${slave.name}</td>
-          <td class="p-4 text-yellow-400">${slave.importer}</td>
-          <td class="p-4 font-bold ${slave.stock > 0 ? 'text-green-400' : 'text-red-400'}">${slave.stock} متاح</td>
-          <td class="p-4 font-bold gold">${price.toLocaleString()} د</td>
-          <td class="p-4 ${isUp ? 'text-green-400' : 'text-red-400'}">${isUp ? '▲' : '▼'} ${Math.abs(change)}%</td>
-          <td class="p-4">
-            <button onclick="buySlave(${slave.id});event.stopImmediatePropagation()" 
-                    class="bg-yellow-500 hover:bg-yellow-400 text-black px-8 py-3 rounded-3xl font-bold transition ${slave.stock === 0 ? 'opacity-30 cursor-not-allowed' : ''}"
+          <td class="p-3 font-mono">#${slave.id}</td>
+          <td class="p-3 font-bold cursor-pointer" onclick="showSlave(${slave.id})">${slave.name}</td>
+          <td class="p-3 font-bold gold">${price.toLocaleString()} د</td>
+          <td class="p-3 font-bold ${slave.stock > 0 ? 'text-green-400' : 'text-red-400'}">${slave.stock}</td>
+          <td class="p-3">
+            <button onclick="buySlave(${slave.id}); event.stopImmediatePropagation()" 
+                    class="bg-yellow-500 hover:bg-yellow-400 active:bg-yellow-600 text-black px-6 py-2.5 rounded-2xl font-bold text-sm ${slave.stock === 0 ? 'opacity-40' : ''}"
                     ${slave.stock === 0 ? 'disabled' : ''}>
               شراء
             </button>
@@ -210,8 +223,10 @@
       const price = currentPrices[id];
       if (slave.stock <= 0) return alert("نفد المخزون!");
       if (balance < price) return alert("رصيدك غير كافٍ!");
+
       balance -= price;
       slave.stock--;
+      
       const existing = portfolio.find(p => p.id === id);
       if (existing) {
         existing.owned++;
@@ -219,68 +234,69 @@
       } else {
         portfolio.push({ ...slave, owned: 1, buyPrices: [price] });
       }
+      
       history.unshift({ type: 'شراء', name: slave.name, price, qty: 1, time: new Date().toLocaleString('ar-SA') });
+      
       saveData();
       renderAll();
-      alert(`✅ اشتريت ${slave.name} (كمية 1)`);
+      
+      // الصوت التلقائي الغبي المضحك
+      speak("شريتني ! أنتَ سيدي ! أحبك !");
+      
+      alert(`✅ اشتريت ${slave.name}`);
     }
 
     function sellSlave(index) {
       const item = portfolio[index];
       const currentPrice = currentPrices[item.id] || item.basePrice;
       const sellValue = currentPrice * item.owned;
+      
       balance += sellValue;
       history.unshift({ type: 'بيع', name: item.name, price: currentPrice, qty: item.owned, time: new Date().toLocaleString('ar-SA') });
-      // إعادة جزء من المخزون
+      
       const originalSlave = slaves.find(s => s.id === item.id);
       if (originalSlave) originalSlave.stock += Math.floor(item.owned / 2);
+      
       portfolio.splice(index, 1);
+      
       saveData();
       renderAll();
-      alert(`✅ بعت ${item.name} ×${item.owned} بـ ${sellValue.toLocaleString()} د`);
+      
+      // الصوت التلقائي الغبي المضحك
+      speak("بعتني !؟ ليه جذي ؟ أكرهك!");
+      
+      alert(`✅ بعت ${item.name} بـ ${sellValue.toLocaleString()} دينار`);
     }
 
     function showSlave(id) {
       const slave = slaves.find(s => s.id === id);
       const price = currentPrices[id];
       const modal = document.getElementById('modal-content');
-      const historyData = priceHistory[id] || [price];
 
       modal.innerHTML = `
-        <div class="flex justify-between mb-6">
-          <h3 class="text-4xl font-bold">${slave.name}</h3>
-          <button onclick="hideModal()" class="text-4xl">✕</button>
+        <div class="flex justify-between mb-5">
+          <h3 class="text-3xl font-bold">${slave.name}</h3>
+          <button onclick="hideModal()" class="text-3xl">✕</button>
         </div>
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div class="lg:col-span-2">
-            <canvas id="priceChart" class="w-full h-80"></canvas>
-          </div>
-          <div>
-            <p class="text-5xl font-bold gold mb-2">${price.toLocaleString()} دينار</p>
-            <p class="text-sm text-gray-400 mb-8">السعر الحالي • كمية متاحة: <span class="text-green-400">${slave.stock}</span></p>
-            <button onclick="buySlave(${id});hideModal()" class="w-full py-6 text-3xl font-bold bg-yellow-500 hover:bg-yellow-400 text-black rounded-3xl mb-4">شراء الآن</button>
-            <div class="text-sm space-y-3">
-              <p><span class="text-yellow-400">مستورد:</span> ${slave.importer}</p>
-              <p><span class="text-yellow-400">الأصل:</span> ${slave.origin}</p>
-              <p><span class="text-yellow-400">المهارات:</span> ${slave.skills}</p>
-            </div>
+        <div>
+          <p class="text-5xl font-bold gold mb-1">${price.toLocaleString()} دينار</p>
+          <p class="text-sm text-gray-400 mb-6">متاح: <span class="text-green-400">${slave.stock}</span></p>
+          
+          <button onclick="buySlave(${id});hideModal()" 
+                  class="w-full py-5 text-2xl font-bold bg-yellow-500 hover:bg-yellow-400 active:bg-yellow-600 text-black rounded-3xl mb-6">
+            شراء الآن
+          </button>
+          
+          <div class="text-sm space-y-2 text-gray-300">
+            <p><span class="text-yellow-400">المستورد:</span> ${slave.importer}</p>
+            <p><span class="text-yellow-400">الأصل:</span> ${slave.origin}</p>
+            <p><span class="text-yellow-400">المهارات:</span> ${slave.skills}</p>
+            <p class="pt-2">${slave.desc}</p>
           </div>
         </div>
       `;
       document.getElementById('slave-modal').classList.remove('hidden');
       document.getElementById('slave-modal').classList.add('flex');
-
-      // رسم البياني
-      setTimeout(() => {
-        new Chart(document.getElementById('priceChart'), {
-          type: 'line',
-          data: {
-            labels: Array.from({length: historyData.length}, (_, i) => `#${i+1}`),
-            datasets: [{ label: 'السعر', data: historyData, borderColor: '#facc15', tension: 0.4, borderWidth: 4 }]
-          },
-          options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { grid: { color: '#334155' } } } }
-        });
-      }, 300);
     }
 
     function hideModal() {
@@ -292,41 +308,48 @@
     function renderPortfolio() {
       const container = document.getElementById('portfolio-list');
       container.innerHTML = portfolio.length === 0 
-        ? `<p class="text-center text-3xl py-20 text-gray-400">ابدأ التداول من السوق...</p>` : '';
+        ? `<p class="text-center text-2xl py-16 text-gray-400">ابدأ التداول من السوق...</p>` : '';
 
       portfolio.forEach((item, i) => {
         const current = currentPrices[item.id];
         const totalValue = current * item.owned;
-        const avgBuy = item.buyPrices.reduce((a,b)=>a+b,0) / item.buyPrices.length;
-        const profit = totalValue - (avgBuy * item.owned);
         const card = document.createElement('div');
-        card.className = "bg-gray-900 rounded-3xl p-8 border border-yellow-500/30";
+        card.className = "bg-gray-900 rounded-3xl p-6 border border-yellow-500/30";
         card.innerHTML = `
-          <div class="flex justify-between items-start">
+          <div class="flex justify-between items-start mb-4">
             <div>
-              <h4 class="text-3xl font-bold">${item.name}</h4>
+              <h4 class="text-2xl font-bold">${item.name}</h4>
               <p class="text-yellow-400">×${item.owned} وحدة</p>
             </div>
             <div class="text-right">
-              <p class="text-4xl gold">${totalValue.toLocaleString()} د</p>
-              <p class="${profit >= 0 ? 'text-green-400' : 'text-red-400'} text-xl">${profit >= 0 ? '+' : ''}${profit.toFixed(0)} د</p>
+              <p class="text-3xl gold">${totalValue.toLocaleString()} د</p>
             </div>
           </div>
-          <button onclick="sellSlave(${i});" class="mt-8 w-full bg-red-600 hover:bg-red-500 py-4 rounded-3xl font-bold text-xl">بيع الكمية كاملة</button>
+          <button onclick="sellSlave(${i});" 
+                  class="w-full bg-red-600 hover:bg-red-500 active:bg-red-700 py-4 rounded-3xl font-bold text-xl">
+            بيع الكمية كاملة
+          </button>
         `;
         container.appendChild(card);
       });
     }
 
-    function renderHistory() { /* نفس الكود السابق مع تحسين بسيط */ 
+    function renderHistory() {
       const container = document.getElementById('history-list');
       container.innerHTML = history.length === 0 ? `<p class="text-center text-gray-400 py-12">لا معاملات بعد</p>` : '';
-      history.forEach(h => {
+      history.slice(0, 15).forEach(h => {
         const div = document.createElement('div');
-        div.className = `flex justify-between bg-gray-900 p-6 rounded-3xl border-l-8 ${h.type==='شراء'?'border-red-400':'border-green-400'}`;
-        div.innerHTML = `<div><span class="font-bold">${h.type} → ${h.name} ×${h.qty||1}</span><p class="text-sm text-gray-400">${h.time}</p></div>
-                        <div class="text-3xl font-bold ${h.type==='شراء'?'text-red-400':'text-green-400'}">${h.type==='شراء'?'-':'+'}${h.price.toLocaleString()}</div>`;
-        container.prepend(div);
+        div.className = `flex justify-between bg-gray-900 p-5 rounded-3xl border-l-8 ${h.type==='شراء'?'border-red-400':'border-green-400'}`;
+        div.innerHTML = `
+          <div>
+            <span class="font-bold">${h.type} → ${h.name}</span>
+            <p class="text-sm text-gray-400">${h.time}</p>
+          </div>
+          <div class="text-2xl font-bold ${h.type==='شراء'?'text-red-400':'text-green-400'}">
+            ${h.type==='شراء'?'-':'+'}${h.price.toLocaleString()}
+          </div>
+        `;
+        container.appendChild(div);
       });
     }
 
@@ -341,7 +364,6 @@
       document.getElementById('total-wealth').textContent = totalWealth.toLocaleString();
       document.getElementById('portfolio-value').textContent = portfolioValue.toLocaleString();
       document.getElementById('total-owned').textContent = totalOwned;
-      return totalWealth;
     }
 
     function saveData() {
@@ -365,29 +387,27 @@
     }
 
     function importNewSlave() {
-      if (balance < 5000) return alert("رصيدك غير كافٍ للاستيراد!");
+      if (balance < 5000) return alert("رصيدك غير كافٍ!");
       balance -= 5000;
       const newSlave = {...slaves[Math.floor(Math.random()*slaves.length)]};
       newSlave.id = Math.max(...slaves.map(s=>s.id)) + 1;
       newSlave.name = newSlave.name + " (جديد)";
-      newSlave.stock = Math.floor(Math.random()*12) + 5;
-      newSlave.basePrice = Math.floor(newSlave.basePrice * (1 + Math.random()*0.3));
+      newSlave.stock = Math.floor(Math.random()*8) + 4;
+      newSlave.basePrice = Math.floor(newSlave.basePrice * (1 + Math.random()*0.25));
       slaves.push(newSlave);
       currentPrices[newSlave.id] = newSlave.basePrice;
       priceHistory[newSlave.id] = [newSlave.basePrice];
       saveData();
       renderAll();
-      alert("✅ تم استيراد رقيق جديد بنجاح!");
+      alert("✅ تم استيراد رقيق جديد!");
     }
 
     function init() {
-      tailwind.config = { content: ["*"] };
       updatePrices();
-      setInterval(updatePrices, 3500); // أسرع تحديث
-      setInterval(renderTicker, 4000);
+      setInterval(updatePrices, 4000);
+      setInterval(renderTicker, 4500);
       renderAll();
       showSection('dashboard');
-      console.log('%c✅ بورصة النخاسة v2.0 – منظومة مالية كاملة', 'color:#facc15;font-size:20px;font-weight:bold');
     }
 
     window.onload = init;
